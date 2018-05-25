@@ -11,13 +11,17 @@ object Settings {
     private lateinit var lazyProjectPath: Path
     private val saveFile by lazy { Paths.get(projectPath.toString(), "settings").toFile() }
     val projectPath by lazy { lazyProjectPath.toFile().mkdirs(); lazyProjectPath }
-    val string = StringPropertyHandler()
-    val int = IntPropertyHandler()
-    val boolean = BooleanPropertyHandler()
+    val string: PropertyHandler<String> = StringPropertyHandler()
+    val int: PropertyHandler<Int> = IntPropertyHandler()
+    val boolean: PropertyHandler<Boolean> = BooleanPropertyHandler()
+    internal val lang by lazy { LanguagePropertyHandler() }
 
     fun configure(config: SettingsConfiguration) {
         lazyProjectPath = Paths.get(config.workingDirPath, config.projectName)
     }
+
+    fun getActiveLang() = get("__activeLang__") ?: "English"
+    fun setActiveLang(name: String) = set("__activeLang__", name)
 
     fun clear() = properties.clear()
 
@@ -32,6 +36,7 @@ object Settings {
         FileWriter(saveFile).use {
             properties.forEach { key, value -> it.appendln("$key,$value") }
         }
+        lang.save()
     }
 
     internal operator fun get(name: String) = properties[name]
