@@ -6,16 +6,17 @@ import java.io.FileWriter
 import java.nio.file.Paths
 
 internal class LanguagePropertyHandler: PropertyHandler<String> {
-    private val dictionary = LinkedHashMap<String, String>()
+    private val lang = LinkedHashMap<String, String>()
     private val langDir = Paths.get(Settings.projectPath.toString(), "lang").toFile()
     private val activeLangFile = Paths.get(langDir.absolutePath, Settings.getActiveLang()).toFile()
 
     init {
         langDir.mkdirs()
-        FileReader(activeLangFile).forEachLine {
-            val parts = it.split(',')
-            dictionary[parts[0]] = parts[1]
-        }
+        if (activeLangFile.exists())
+            FileReader(activeLangFile).forEachLine {
+                val parts = it.split(',')
+                lang[parts[0]] = parts[1]
+            }
     }
 
     fun getLanguages() = langDir.listFiles().map { it.name }
@@ -27,13 +28,13 @@ internal class LanguagePropertyHandler: PropertyHandler<String> {
 
     fun save() {
         FileWriter(activeLangFile).use {
-            dictionary.forEach { key, value -> it.appendln("$key,$value") }
+            lang.forEach { key, value -> it.appendln("$key,$value") }
         }
     }
 
     override fun set(name: String, value: String): String {
-        dictionary["__lang__$name"] = value
+        lang["__lang__$name"] = value
         return value
     }
-    override fun getOrNull(name: String) = dictionary["__lang__$name"] ?: set(name, name)
+    override fun getOrNull(name: String) = lang["__lang__$name"] ?: set(name, name)
 }
