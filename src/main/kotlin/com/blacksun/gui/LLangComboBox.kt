@@ -4,13 +4,13 @@ import com.blacksun.settings.Settings
 import com.blacksun.settings.handler.LanguagePropertyHandler
 import javax.swing.JComboBox
 
-class LLangComboBox(name: String = "lang", id: String = "__scmb__$name"):
-        JComboBox<String>((Settings.lang as LanguagePropertyHandler).getLanguages().toTypedArray()) {
+class LLangComboBox(name: String = "lang", id: String = "__lcmb__$name"):
+        JComboBox<String>(Settings.lang.getLanguages().toTypedArray()) {
     init {
         Settings.register(id, this)
-        selectedItem = Settings.getActiveLang()
+        selectedItem = Settings.lang.getActiveLang()
         addActionListener {
-            Settings.setActiveLang(selectedItem as String)
+            Settings.lang.setActiveLang(selectedItem as String)
         }
     }
 }

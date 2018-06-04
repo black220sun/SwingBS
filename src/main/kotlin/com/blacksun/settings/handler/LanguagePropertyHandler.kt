@@ -5,10 +5,10 @@ import java.io.FileReader
 import java.io.FileWriter
 import java.nio.file.Paths
 
-internal class LanguagePropertyHandler: PropertyHandler<String> {
+class LanguagePropertyHandler: PropertyHandler<String> {
     private val lang = LinkedHashMap<String, String>()
     private val langDir = Paths.get(Settings.projectPath.toString(), "lang").toFile()
-    private val activeLangFile = Paths.get(langDir.absolutePath, Settings.getActiveLang()).toFile()
+    private val activeLangFile = Paths.get(langDir.absolutePath, getActiveLang()).toFile()
 
     init {
         langDir.mkdirs()
@@ -19,11 +19,14 @@ internal class LanguagePropertyHandler: PropertyHandler<String> {
             }
     }
 
+    fun getActiveLang() = Settings["__activeLang__"] ?: Settings.set("__activeLang__", "English")
+    fun setActiveLang(name: String) = Settings.set("__activeLang__", name)
+
     fun getLanguages() = langDir.listFiles().map { it.name }
 
     fun changeLang(name: String) {
         if (name in getLanguages())
-            Settings.setActiveLang(name)
+            setActiveLang(name)
     }
 
     fun save() {

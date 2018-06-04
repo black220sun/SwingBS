@@ -21,19 +21,18 @@ object Settings {
     val string: PropertyHandler<String> = StringPropertyHandler()
     val int: PropertyHandler<Int> = IntPropertyHandler()
     val boolean: PropertyHandler<Boolean> = BooleanPropertyHandler()
-    val lang: PropertyHandler<String> by lazy { LanguagePropertyHandler() }
+    val lang by lazy { LanguagePropertyHandler() }
 
     fun configure(config: SettingsConfiguration) {
         lazyProjectPath = Paths.get(config.workingDirPath, ".${config.projectName}")
         load()
     }
 
-    fun getActiveLang() = get("__activeLang__") ?: set("__activeLang__", "English")
-    fun setActiveLang(name: String) = set("__activeLang__", name)
+    internal fun clear() = properties.clear()
 
-    fun clear() = properties.clear()
-
-    fun load() {
+    fun load(clear: Boolean = true) {
+        if (clear)
+            clear()
         FileReader(saveFile).forEachLine {
             val parts = it.split(',')
             properties[parts[0]] = parts[1]
@@ -44,12 +43,12 @@ object Settings {
         FileWriter(saveFile).use {
             properties.forEach { key, value -> it.appendln("$key,$value") }
         }
-        (lang as LanguagePropertyHandler).save()
+        lang.save()
     }
 
     internal fun register(id: String, component: Component) {
         if (id in components.keys)
-            throw IllegalArgumentException("ID is already exists")
+            throw IllegalArgumentException("ID exists")
         components[id] = component
     }
 
