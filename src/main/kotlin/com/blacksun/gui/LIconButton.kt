@@ -8,7 +8,7 @@ import javax.swing.ImageIcon
 import javax.swing.JButton
 
 class LIconButton(path: String, action: ((ActionEvent) -> Unit)? = null,
-                  name: String? = null, id: String? = null): JButton() {
+                  name: String? = null, val id: String? = null): JButton() {
     init {
         val file = Paths.get(Settings.resourceDir, path).toFile()
         val realName = name ?: file.nameWithoutExtension

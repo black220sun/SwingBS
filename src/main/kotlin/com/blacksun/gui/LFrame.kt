@@ -8,7 +8,8 @@ import javax.swing.JFrame
 import javax.swing.JOptionPane
 import javax.swing.WindowConstants
 
-class LFrame(name: String, panel: JComponent? = null, id: String = "__frm__$name"): JFrame(Settings.lang[name]), WindowListener {
+class LFrame(name: String, panel: JComponent? = null, val id: String = "__frm__$name"):
+        JFrame(Settings.lang[name]), WindowListener {
     override fun windowDeiconified(p0: WindowEvent?) = Unit
     override fun windowActivated(p0: WindowEvent?) = Unit
     override fun windowDeactivated(p0: WindowEvent?) = Unit

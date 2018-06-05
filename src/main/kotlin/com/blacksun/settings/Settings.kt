@@ -47,6 +47,8 @@ object Settings {
     }
 
     internal fun register(id: String, component: Component) {
+        if (id == "")
+            return
         if (id in components.keys)
             throw IllegalArgumentException("ID exists")
         components[id] = component

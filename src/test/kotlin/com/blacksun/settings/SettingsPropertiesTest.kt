@@ -1,6 +1,5 @@
-package com.blacksun
+package com.blacksun.settings
 
-import com.blacksun.settings.Settings
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
