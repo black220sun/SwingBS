@@ -9,11 +9,16 @@ import javax.swing.*
 class LCalendar(name: String = "calendar", private val save: Boolean = false, load: Boolean = false,
                 val id: String = "__cld__$name"): JPanel() {
     val calendar = Calendar.getInstance()!!
+    private val vgap = Settings.int.getOrPut("$id#vgap", 8)
+    private val hgap = Settings.int.getOrPut("$id#hgap", 8)
     private val panel = JPanel()
     private var day = DayButton(0, this)
     private val months = arrayListOf(
             "January", "February", "March", "April", "May", "June", "July",
             "August", "September", "October", "November", "December"
+    ).map { Settings.lang[it] }
+    private val days = arrayListOf(
+            "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
     ).map { Settings.lang[it] }
 
     init {
@@ -36,6 +41,7 @@ class LCalendar(name: String = "calendar", private val save: Boolean = false, lo
     private fun updatePanel() {
         panel.removeAll()
         panel.add(genToolbar())
+        panel.add(genDayBar())
         panel.add(genView())
         panel.revalidate()
         if (save) {
@@ -44,9 +50,20 @@ class LCalendar(name: String = "calendar", private val save: Boolean = false, lo
         }
     }
 
+    private fun genDayBar(): JPanel {
+        val panel = JPanel()
+        with (panel) {
+            layout = GridLayout(1, 7, hgap, 0)
+            val offset = calendar.firstDayOfWeek - 1
+            for (i in 0..6)
+                add(JLabel(days[(i + offset) % 7]))
+        }
+        return panel
+    }
+
     private fun genToolbar(): JPanel {
         val panel = JPanel()
-        panel.layout = GridLayout(1,7,8,0)
+        panel.layout = GridLayout(1, 7, hgap, 0)
         val month = JLabel(months[calendar.get(Calendar.MONTH)])
         val year = JLabel(calendar.get(Calendar.YEAR).toString())
 
@@ -79,7 +96,7 @@ class LCalendar(name: String = "calendar", private val save: Boolean = false, lo
         val panel = JPanel()
         val weeks = calendar.getActualMaximum(Calendar.WEEK_OF_MONTH)
         val days = arrayListOf<JComponent>()
-        panel.layout = GridLayout(weeks, 7, 8, 8)
+        panel.layout = GridLayout(weeks, 7, hgap, vgap)
         val old = calendar.get(Calendar.DAY_OF_MONTH)
         calendar.set(Calendar.DAY_OF_MONTH, 1)
         for (i in 3..calendar.get(Calendar.DAY_OF_WEEK))
