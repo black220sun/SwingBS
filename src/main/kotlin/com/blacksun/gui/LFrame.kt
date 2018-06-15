@@ -40,7 +40,7 @@ class LFrame(name: String, panel: JComponent? = null, val id: String = "__frm__$
     operator fun plusAssign(component: JComponent) {
         contentPane.add(component)
     }
-    operator fun plus(component: JComponent): JFrame {
+    operator fun plus(component: JComponent): LFrame {
         contentPane.add(component)
         return this
     }
