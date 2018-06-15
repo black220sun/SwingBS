@@ -33,6 +33,8 @@ object Settings {
     fun load(clear: Boolean = true) {
         if (clear)
             clear()
+        if (!saveFile.exists())
+            return
         FileReader(saveFile).forEachLine {
             val parts = it.split(',')
             properties[parts[0]] = parts[1]

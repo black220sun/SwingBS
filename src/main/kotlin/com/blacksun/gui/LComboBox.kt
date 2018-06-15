@@ -7,10 +7,17 @@ class LComboBox<T>(name: String, values: Array<T>, index: Int = 0, val id: Strin
         JComboBox<T>(values) {
     init {
         Settings.register(id, this)
-        val realIndex = if (index >= values.size) 0 else index
-        selectedIndex = Settings.int.getOrPut(id, realIndex)
+        val realIndex = if (Settings.int.getOrDefault(id, index) >= values.size) 0 else index
+        Settings.int[id] = realIndex
+        selectedIndex = realIndex
         addActionListener {
             Settings.int[id] = selectedIndex
         }
+    }
+
+    fun setItems(items: Collection<T>) {
+        removeAllItems()
+        items.forEach(::addItem)
+        revalidate()
     }
 }
