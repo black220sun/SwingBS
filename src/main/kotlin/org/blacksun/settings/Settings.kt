@@ -48,12 +48,12 @@ object Settings {
         lang.save()
     }
 
-    internal fun register(id: String, orgponent: Component) {
+    internal fun register(id: String, component: Component) {
         if (id == "")
             return
         if (id in components.keys)
             throw IllegalArgumentException("ID exists")
-        components[id] = orgponent
+        components[id] = component
     }
 
     fun getComponent(id: String): Component = components[id]!!
