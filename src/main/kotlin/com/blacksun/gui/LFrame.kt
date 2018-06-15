@@ -17,7 +17,7 @@ class LFrame(name: String, panel: JComponent? = null, val id: String = "__frm__$
     override fun windowIconified(p0: WindowEvent?) = Unit
     override fun windowClosed(p0: WindowEvent?) = Unit
     override fun windowClosing(p0: WindowEvent?) {
-        if (!Settings.boolean["forceQuit"]) {
+        if (!Settings.boolean.getOrDefault("forceQuit", false)) {
             val text = Settings.lang["Quit?"]
             val title = Settings.lang["Quit"]
             val result = JOptionPane.showConfirmDialog(this, text, title, JOptionPane.YES_NO_OPTION)
