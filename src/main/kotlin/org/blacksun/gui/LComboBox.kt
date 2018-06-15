@@ -1,6 +1,6 @@
-package com.blacksun.gui
+package org.blacksun.gui
 
-import com.blacksun.settings.Settings
+import org.blacksun.settings.Settings
 import javax.swing.JComboBox
 
 class LComboBox<T>(name: String, values: Array<T>, index: Int = 0, val id: String = "__cmb__$name"):

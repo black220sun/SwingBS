@@ -1,6 +1,6 @@
-package com.blacksun.gui
+package org.blacksun.gui
 
-import com.blacksun.settings.Settings
+import org.blacksun.settings.Settings
 import javax.swing.JCheckBox
 
 class LStateCheckBox(name: String, state: Boolean = false, val id: String = "__schb__$name"):

@@ -1,7 +1,6 @@
-package com.blacksun.gui
+package org.blacksun.gui
 
-import com.blacksun.settings.Settings
-import com.blacksun.settings.handler.LanguagePropertyHandler
+import org.blacksun.settings.Settings
 import javax.swing.JComboBox
 
 class LLangComboBox(name: String = "lang", val id: String = "__lcmb__$name"):

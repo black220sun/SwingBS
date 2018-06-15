@@ -1,4 +1,4 @@
-package com.blacksun.settings
+package org.blacksun.settings
 
 import org.junit.Before
 import org.junit.Test

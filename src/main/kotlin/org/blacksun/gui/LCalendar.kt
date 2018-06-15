@@ -1,6 +1,6 @@
-package com.blacksun.gui
+package org.blacksun.gui
 
-import com.blacksun.settings.Settings
+import org.blacksun.settings.Settings
 import java.awt.Color
 import java.awt.GridLayout
 import java.util.Calendar

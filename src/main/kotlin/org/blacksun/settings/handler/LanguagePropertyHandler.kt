@@ -1,6 +1,6 @@
-package com.blacksun.settings.handler
+package org.blacksun.settings.handler
 
-import com.blacksun.settings.Settings
+import org.blacksun.settings.Settings
 import java.io.FileReader
 import java.io.FileWriter
 import java.nio.file.Paths

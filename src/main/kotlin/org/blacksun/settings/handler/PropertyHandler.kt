@@ -1,4 +1,4 @@
-package com.blacksun.settings.handler
+package org.blacksun.settings.handler
 
 interface PropertyHandler<T> {
     operator fun set(name: String, value: T): T

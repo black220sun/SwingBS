@@ -1,6 +1,6 @@
-package com.blacksun.gui
+package org.blacksun.gui
 
-import com.blacksun.settings.Settings
+import org.blacksun.settings.Settings
 import java.awt.event.WindowEvent
 import java.awt.event.WindowListener
 import javax.swing.JComponent
@@ -37,11 +37,11 @@ class LFrame(name: String, panel: JComponent? = null, val id: String = "__frm__$
         addWindowListener(this)
     }
 
-    operator fun plusAssign(component: JComponent) {
-        contentPane.add(component)
+    operator fun plusAssign(orgponent: JComponent) {
+        contentPane.add(orgponent)
     }
-    operator fun plus(component: JComponent): LFrame {
-        contentPane.add(component)
+    operator fun plus(orgponent: JComponent): LFrame {
+        contentPane.add(orgponent)
         return this
     }
 }

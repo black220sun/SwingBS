@@ -1,6 +1,6 @@
-package com.blacksun.gui
+package org.blacksun.gui
 
-import com.blacksun.settings.Settings
+import org.blacksun.settings.Settings
 import javax.swing.JComboBox
 
 class LStringComboBox(name: String, values: Collection<String>, index: Int = 0,

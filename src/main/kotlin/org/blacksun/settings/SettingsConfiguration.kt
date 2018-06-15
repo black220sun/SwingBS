@@ -1,4 +1,4 @@
-package com.blacksun.settings
+package org.blacksun.settings
 
 class SettingsConfiguration(
         val projectName: String,

@@ -1,6 +1,6 @@
-package com.blacksun.settings.handler
+package org.blacksun.settings.handler
 
-import com.blacksun.settings.Settings
+import org.blacksun.settings.Settings
 
 internal class StringPropertyHandler: PropertyHandler<String> {
     override fun set(name: String, value: String) = Settings.set(name, value)

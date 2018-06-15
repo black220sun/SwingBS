@@ -1,6 +1,6 @@
-package com.blacksun.settings
+package org.blacksun.settings
 
-import com.blacksun.settings.handler.*
+import org.blacksun.settings.handler.*
 import java.awt.Component
 import java.io.FileReader
 import java.io.FileWriter
@@ -48,12 +48,12 @@ object Settings {
         lang.save()
     }
 
-    internal fun register(id: String, component: Component) {
+    internal fun register(id: String, orgponent: Component) {
         if (id == "")
             return
         if (id in components.keys)
             throw IllegalArgumentException("ID exists")
-        components[id] = component
+        components[id] = orgponent
     }
 
     fun getComponent(id: String): Component = components[id]!!

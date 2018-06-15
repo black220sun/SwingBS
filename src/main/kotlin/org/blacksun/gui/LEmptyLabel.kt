@@ -1,4 +1,4 @@
-package com.blacksun.gui
+package org.blacksun.gui
 
 import javax.swing.JLabel
 
