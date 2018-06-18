@@ -1,6 +1,8 @@
 package org.blacksun.gui
 
 import org.blacksun.settings.Settings
+import java.awt.event.ComponentEvent
+import java.awt.event.ComponentListener
 import java.awt.event.WindowEvent
 import java.awt.event.WindowListener
 import javax.swing.JComponent
@@ -9,7 +11,9 @@ import javax.swing.JOptionPane
 import javax.swing.WindowConstants
 
 class LFrame(name: String, panel: JComponent? = null, val id: String = "__frm__$name"):
-        JFrame(Settings.lang[name]), WindowListener {
+        JFrame(Settings.lang[name]), WindowListener, ComponentListener {
+    override fun componentHidden(p0: ComponentEvent?) = Unit
+    override fun componentShown(p0: ComponentEvent?) = Unit
     override fun windowDeiconified(p0: WindowEvent?) = Unit
     override fun windowActivated(p0: WindowEvent?) = Unit
     override fun windowDeactivated(p0: WindowEvent?) = Unit
@@ -27,6 +31,14 @@ class LFrame(name: String, panel: JComponent? = null, val id: String = "__frm__$
         Settings.save()
         dispose()
     }
+    override fun componentMoved(p0: ComponentEvent?) {
+        Settings.int["$id#X"] = x
+        Settings.int["$id#Y"] = y
+    }
+    override fun componentResized(p0: ComponentEvent?) {
+        Settings.int["$id#height"] = height
+        Settings.int["$id#width"] = width
+    }
 
     init {
         Settings.register(id, this)
@@ -35,13 +47,22 @@ class LFrame(name: String, panel: JComponent? = null, val id: String = "__frm__$
         isVisible = true
         defaultCloseOperation = WindowConstants.DO_NOTHING_ON_CLOSE
         addWindowListener(this)
+        addComponentListener(this)
     }
 
-    operator fun plusAssign(orgponent: JComponent) {
-        contentPane.add(orgponent)
+    fun restoreSize() {
+        val height = Settings.int.getOrDefault("$id#height", height)
+        val width = Settings.int.getOrDefault("$id#width", width)
+        val x = Settings.int.getOrDefault("$id#X", 100)
+        val y = Settings.int.getOrDefault("$id#Y", 100)
+        setBounds(x, y, width, height)
     }
-    operator fun plus(orgponent: JComponent): LFrame {
-        contentPane.add(orgponent)
+
+    operator fun plusAssign(component: JComponent) {
+        contentPane.add(component)
+    }
+    operator fun plus(component: JComponent): LFrame {
+        contentPane.add(component)
         return this
     }
 }
