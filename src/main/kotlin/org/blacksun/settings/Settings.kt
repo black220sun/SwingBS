@@ -1,5 +1,6 @@
 package org.blacksun.settings
 
+import org.blacksun.gui.LWrapper
 import org.blacksun.settings.handler.*
 import java.awt.Component
 import java.io.FileReader
@@ -57,6 +58,12 @@ object Settings {
     }
 
     fun getComponent(id: String): Component = components[id]!!
+
+    fun <T>getWrapped(id: String): T {
+        val component = components[id] as? LWrapper<*> ?: throw IllegalArgumentException("Component is not LWrapper")
+        @Suppress("UNCHECKED_CAST")
+        return component.value as? T ?: throw IllegalArgumentException("Value class mismatch")
+    }
 
     internal operator fun get(name: String) = properties[name]
     internal operator fun set(name: String, value: String): String {
